@@ -24,65 +24,6 @@ function addFromHtml() {
     }
 }
 
-//function  to display the content of our tasklist in html DOM
-function displayContent() {
-     const newListDiv = document.createElement("div");
-    // newListDiv.classList.add("main-div")
-    
-     for (let i = 0; i < toDoTask.length; i++) {
-         const listDisplay = document.createElement("p");
-         //listDisplay.classList.add("task-lists");
-
-        //checkbox
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        listDisplay.appendChild(checkbox);
-        checkbox.addEventListener("click",() =>{
-            listDisplay.classList.toggle("task-lists");
-            checkbox.classList.toggle("change");
-            newListDiv.classList.toggle("main-div");
-            parent.classList.toggle("parent")
-
-        })
-        // checkbox.addEventListener("click", () => {taskDone(toDoTask[i]) 
-        // });
-       
-        
-        //delete button
-        const deleteButton = document.createElement("button");
-        deleteButton.innerText = "Delete";
-        listDisplay.innerText = toDoTask[i].task;
-
-        //edit button
-        const editButton = document.createElement("button");
-        editButton.innerText = "Edit";
-        editButton.addEventListener("click", () => {
-        editInList(toDoTask[i], toDoTask[i].id, toDoTask[i].check)});
-        
-
-        //deleteButton.classList.add("deleteButton"); //example to add classname to the element created
-       
-        deleteButton.addEventListener("click", function () {
-            deleteFromList(toDoTask[i])
-        }
-        );
-        newListDiv.appendChild(checkbox);
-        newListDiv.appendChild(listDisplay);
-        newListDiv.appendChild(deleteButton);
-        newListDiv.appendChild(editButton);
-        newListDiv.style.display = "flex"; //styling
-
-        if(toDoTask[i].check==true){
-            listDisplay.classList.toggle("task-lists");
-        }
-      
-    }
-    parent.childNodes[0].replaceWith(newListDiv); //replacing old parent div with new div
-  
-
-}
-
-
 //functions
 //function to delete the task 
 function deleteFromList(deleteitem) {
@@ -100,10 +41,67 @@ function editInList(edititem, edititemid, checkid) {
     displayContent();
 }
 
-// //function to check if the task is done or not
-// function taskDone(checkitem) {
-//     let a = toDoTask.indexOf(checkitem);
-//     toDoTask[a].check = true;     //when clicked the value done from tasklist changes to true
-//     displayContent();
-//     console.log(toDoTask)
-// }
+function changeStatus(index) {
+    console.log(index);
+    toDoTask[index].check = !toDoTask[index].check;
+    console.log(toDoTask);
+    displayContent();
+}
+
+
+//function  to display the content of our tasklist in html DOM
+function displayContent() {
+    const newListDiv = document.createElement("div");
+    for (let i = 0; i < toDoTask.length; i++) {
+        const listTile = document.createElement("div")
+        const listDisplay = document.createElement("p");
+
+        //checkbox
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        listDisplay.appendChild(checkbox);
+        checkbox.addEventListener("click", () => {
+            changeStatus(i);
+        })
+
+        if (toDoTask[i].check === true) {
+            checkbox.checked=true;
+            listDisplay.classList.add("isDone");
+        }
+
+
+        //delete button
+        const deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        listDisplay.innerText = toDoTask[i].task;
+
+        //edit button
+        const editButton = document.createElement("button");
+        editButton.innerText = "Edit";
+        editButton.addEventListener("click", () => {
+        editInList(toDoTask[i], toDoTask[i].id, toDoTask[i].check)
+        });
+
+
+        //deleteButton.classList.add("deleteButton"); //example to add classname to the element created
+
+        deleteButton.addEventListener("click", function () {
+            deleteFromList(toDoTask[i])
+        }
+        );
+
+        listTile.appendChild(checkbox);
+        listTile.appendChild(listDisplay);
+        listTile.appendChild(deleteButton);
+        listTile.appendChild(editButton);
+
+
+        if (toDoTask[i].check == true) {
+            listDisplay.classList.toggle("task-lists");
+        }
+        listTile.classList.add("listTile")
+        newListDiv.appendChild(listTile);
+
+    }
+    parent.childNodes[0].replaceWith(newListDiv); //replacing old parent div with new div
+}
