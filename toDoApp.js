@@ -27,15 +27,26 @@ function addFromHtml() {
 //function  to display the content of our tasklist in html DOM
 function displayContent() {
      const newListDiv = document.createElement("div");
+    // newListDiv.classList.add("main-div")
+    
      for (let i = 0; i < toDoTask.length; i++) {
          const listDisplay = document.createElement("p");
+         //listDisplay.classList.add("task-lists");
 
         //checkbox
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         listDisplay.appendChild(checkbox);
-        checkbox.addEventListener("click", () => {
-        taskDone(toDoTask[i])})
+        checkbox.addEventListener("click",() =>{
+            listDisplay.classList.toggle("task-lists");
+            checkbox.classList.toggle("change");
+            newListDiv.classList.toggle("main-div");
+            parent.classList.toggle("parent")
+
+        })
+        // checkbox.addEventListener("click", () => {taskDone(toDoTask[i]) 
+        // });
+       
         
         //delete button
         const deleteButton = document.createElement("button");
@@ -60,7 +71,11 @@ function displayContent() {
         newListDiv.appendChild(deleteButton);
         newListDiv.appendChild(editButton);
         newListDiv.style.display = "flex"; //styling
-        
+
+        if(toDoTask[i].check==true){
+            listDisplay.classList.toggle("task-lists");
+        }
+      
     }
     parent.childNodes[0].replaceWith(newListDiv); //replacing old parent div with new div
   
@@ -71,7 +86,6 @@ function displayContent() {
 //functions
 //function to delete the task 
 function deleteFromList(deleteitem) {
-    console.log(deleteitem);
     toDoTask.splice(toDoTask.indexOf(deleteitem), 1);
     console.log(toDoTask);
     displayContent();
@@ -86,9 +100,10 @@ function editInList(edititem, edititemid, checkid) {
     displayContent();
 }
 
-//function to check if the task is done or not
-function taskDone(checkitem) {
-    let a = toDoTask.indexOf(checkitem);
-    toDoTask[a].check = true;     //when clicked the value done from tasklist changes to true
-    displayContent();
-}
+// //function to check if the task is done or not
+// function taskDone(checkitem) {
+//     let a = toDoTask.indexOf(checkitem);
+//     toDoTask[a].check = true;     //when clicked the value done from tasklist changes to true
+//     displayContent();
+//     console.log(toDoTask)
+// }

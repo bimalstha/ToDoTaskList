@@ -1,0 +1,7 @@
+.change{
+    color: green;
+}
+
+.parent .main-div .task-list .change{
+    text-decoration: line-through;
+}
