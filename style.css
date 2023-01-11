@@ -5,3 +5,15 @@
 .parent .main-div .task-list .change{
     text-decoration: line-through;
 }
+.listTile{
+    display: flex;
+    justify-content: space-around;
+    width: 250px;
+}
+.listTile p{
+    flex: 1;
+}
+.listTile .isDone{
+    text-decoration: line-through;
+    text-decoration-color: red;
+}
